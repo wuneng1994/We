@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>博客页面</title>
+    <link rel="stylesheet" href="/static/plugins/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="/static/plugins/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="/static/plugins/jquery-3.4.0.js"></script>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="jumbotron">
+        <h1>{{ blog_obj.title }}</h1>
+        <p>博客简介</p>
+        <div class="text-right">
+            <a class="btn btn-primary btn-sm" href="#" role="button">首页</a>
+            <a class="btn btn-primary btn-sm" href="#" role="button">个人首页</a>
+            <a class="btn btn-primary btn-sm" href="#" role="button">管理</a>
+        </div>
+    </div>
+</div>
+<div class="container" style="width: 1440px">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="person_info">
+                <h2>公告</h2>
+                <ul>
+                    <li>昵称</li>
+                    <li>粉丝</li>
+                    <li>关注</li>
+                    <li>邮箱</li>
+                </ul>
+            </div>
+
+            <div class="caption_list">
+                <h2>标签</h2>
+                <ul>
+                    <li><a href="">昵称</a></li>
+                    <li><a href="">昵称</a></li>
+                </ul>
+            </div>
+
+            <div class="classify_list">
+                <h2>分类</h2>
+                <ul>
+                    <li><a href="">昵称</a></li>
+                    <li><a href="">昵称</a></li>
+                </ul>
+            </div>
+            <div class="date">
+                <h2>时间</h2>
+                <ul>
+                    <li><a href="">2019-8</a></li>
+                    <li><a href="">2019-9</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-sm-9 article">
+            {% for article in article_obj %}
+                <div class="article_box">
+                    <div class="article_title"><a href="{% url "get_article" blog=user_obj.account article_id=article.id %}"><h2>{{ article.title }}</h2></a></div>
+                    <div class="article_detail">{{ article.text.text }}</div>
+                    <a class="article_ctime">发布于 {{ article.ctime }}</a>
+                    <a class="read_count">阅读({{ article.perference_set.count }})</a>
+                    <a class="comment_count">评论({{ article.comment_set.count }})</a>
+                    <a href="">编辑</a>
+                    <hr>
+                </div>
+
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

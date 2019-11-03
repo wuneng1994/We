@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>博客页面</title>
+    <link rel="stylesheet" href="/static/plugins/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="/static/plugins/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="/static/plugins/jquery-3.4.0.js"></script>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="jumbotron">
+        <h1>{{ blog_obj.title }}</h1>
+        <p>博客简介</p>
+        <div class="text-right">
+            <a class="btn btn-primary btn-sm" href="#" role="button">首页</a>
+            <a class="btn btn-primary btn-sm" href="#" role="button">个人首页</a>
+            <a class="btn btn-primary btn-sm" href="#" role="button">管理</a>
+        </div>
+    </div>
+</div>
+<div class="container" style="width: 1440px">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="person_info">
+                <h2>公告</h2>
+                <ul>
+                    <li>昵称</li>
+                    <li>粉丝</li>
+                    <li>关注</li>
+                    <li>邮箱</li>
+                </ul>
+            </div>
+
+            <div class="caption_list">
+                <h2>标签</h2>
+                <ul>
+                    <li><a href="">昵称</a></li>
+                    <li><a href="">昵称</a></li>
+                </ul>
+            </div>
+
+            <div class="classify_list">
+                <h2>分类</h2>
+                <ul>
+                    <li><a href="">昵称</a></li>
+                    <li><a href="">昵称</a></li>
+                </ul>
+            </div>
+            <div class="date">
+                <h2>时间</h2>
+                <ul>
+                    <li><a href="">2019-8</a></li>
+                    <li><a href="">2019-9</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-sm-9 article">
+                <div class="article_box">
+                    <div class="article_title"><h2>{{ article_obj.title }}</h2></div>
+                    <hr>
+                    <div class="article_detail">{{ article_obj.text.text }}</div>
+                    <div>
+                        <a href=""><span class="glyphicon glyphicon-thumbs-up fa-2x" aria-hidden="true"></span></a>
+                    </div>
+                    <div>
+                        <a href=""><span class="glyphicon glyphicon-thumbs-down fa-2x" aria-hidden="true"></span></a>
+                    </div>
+                    <a class="article_ctime">发布于 {{ article_obj.ctime }}</a>
+                    <a class="read_count">阅读({{ article_obj.perference_set.count }})</a>
+                    <a class="comment_count">评论({{ article_obj.comment_set.count }})</a>
+                    <a href="">编辑</a>
+                    <hr>
+                </div>
+                <div class="comment_box">
+                    <h3>评论列表</h3>
+                    {% for comment in article_obj.comment_set.all %}
+                        <div class="comment">
+                            <a href="">{{ comment.user.username }}</a>
+                            <span>{{ comment.ctime }}</span>
+                            <a href="" class="text-right">回复</a>
+                            {% if comment.parent_comment.user.username %}
+                                <div><a href="">@{{ comment.parent_comment.user.username|default_if_none:"" }}</a></div>
+                            {% endif %}
+                            <div>{{ comment.content }}</div>
+
+                            <hr>
+                        </div>
+                    {% endfor %}
+
+
+
+                </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

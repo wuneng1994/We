@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/plugins/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="/static/plugins/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="/static/plugins/jquery-3.4.0.js"></script>
+</head>
+<body>
+{% load markdown_deux_tags %}
+{% include 'header.html' %}
+<div class="container center-block" style="border: 1px solid red;width: 1440px">
+    <div class="row">
+        <div class="col-sm-8">
+            {% for article in article_list %}
+                <div class="article_box">
+                    <div class="article_title">{{article.title}}</div>
+                    <div class="article_title"><img src="/{{article.author.img}}" alt="" style="max-width: 200px"><span class="article_detail">{{ article.text.text|markdown}}</span></div>
+                    <a class="article_author" href="{% url "blog" blog=article.author.account %}">{{ article.author.username }}</a>
+                    <a class="article_ctime">发布于 {{ article.ctime }}</a>
+                    <a class="article_ctime">{{ article.comment_set.count }}</a>
+                    <a class="article_ctime">{{ article.perference_set.count }}</a>
+                    <hr>
+                </div>
+            {% endfor %}
+
+
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li><a href="{{ base_url }}?page_num=1">首页</a></li>
+                    <li>
+                        {% if article_list.has_previous %}
+                            <a href="{{ base_url }}?page_num={{ article_list.previous_page_number }}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+                        {% else %}
+                            <a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+                        {% endif %}
+                    </li>
+
+                    {% for i in pag_obj.per_page_range %}
+                        {% if current_page == i %}
+                            <li class="active"><a href="{{ base_url }}?page_num={{ i }}" >{{ i }}</a></li>
+                        {% else %}
+                            <li><a href="{{ base_url }}?page_num={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+
+                    <li>
+                        {% if article_list.has_next %}
+                            <a href="{{ base_url }}?page_num={{ article_list.next_page_number }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+                        {% else %}
+                            <a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+                        {% endif %}
+                    </li>
+                    <li><a href="{{ base_url }}?page_num={{ pag_obj.num_pages }}">尾页</a></li>
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

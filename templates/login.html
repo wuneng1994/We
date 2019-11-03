@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/plugins/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="/static/plugins/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="/static/plugins/jquery-3.4.0.js"></script>
+
+    <style>
+        .input-group{
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid center-block">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3" style="box-shadow: darkgrey 1px 1px 3px 2px;">
+            <form action="{% url 'login' %}" method="post" style="margin: 20px">
+                {% csrf_token %}
+                <div class="text-danger">{{ obj.non_field_errors.0 }}</div>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">{{ obj.account.label }}</span>
+                    <input name="account" type="text" class="form-control" placeholder="账号" value="{{ obj.account.value|default_if_none:"" }}" aria-describedby="basic-addon1">
+                </div>
+                <div class="text-danger">{{ obj.errors.account.0 }}</div>
+
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">{{ obj.pwd.label }}</span>
+                    <input name="pwd" type="password" class="form-control" placeholder="密码" aria-describedby="basic-addon1">
+
+                </div>
+                <div class="text-danger">{{ obj.errors.pwd.0 }}</div>
+
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">{{ obj.verify_code.label }}</span>
+                    <input name="verify_code" type="text" class="form-control" placeholder="验证码" aria-describedby="basic-addon1">
+                    <img src="{% url "apply_verify_code" %}" alt="">
+                </div>
+                <div class="text-danger">{{ obj.errors.verify_code.0 }}</div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <input class="btn btn-success  active btn-block" role="button" type="submit">
+                    </div>
+
+                    <div class="col-sm-3">
+                        <a class="btn btn-primary  btn-block active btn-block" role="button" href="{% url 'index' type_id=0 %}">返回首页</a>
+
+                    </div>
+
+                    <div class="col-sm-3">
+                        <a class="btn btn-info  active btn-block" role="button " href="{% url 'register' %}">注册</a>
+
+                    </div>
+
+                    <div class="col-sm-3">
+                        <a class="btn btn-warning  active btn-block" role="button" href="">忘记密码</a>
+
+                    </div>
+
+
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
